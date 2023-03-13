@@ -1,32 +1,86 @@
 package com.example.wordapp_lab_3.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.wordapp_lab_3.Adapters.WordAdapter;
 import com.example.wordapp_lab_3.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView letterRecyclerView;
     private WordAdapter wordAdapter;
+
+    public static final String TAG ="DETAIL_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        letterRecyclerView=findViewById(R.id.recycler_view);
 
-        recyclerView=findViewById(R.id.recycler_view);
-        wordAdapter = new WordAdapter(DetailActivity.this, returnStringList(getResources().getStringArray(R.array.words)));
+        Log.d(TAG, "onCreate: I'm In");
+        wordAdapter = new WordAdapter(this, getIntent().getStringExtra("LETTER"));
+
+        letterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        letterRecyclerView.setAdapter(wordAdapter);
 
     }
 
-    public ArrayList<String> returnStringList(String [] wordList)
-    {
-        return new ArrayList<String>();
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ON_STATE_CALLED");
     }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: On start Executed.");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: On Pause Executed.");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: On Resume Executed.");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart: On Restart Executed.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: On Stop Executed");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: On Destroy Executed.");
+    }
+
+
+
 }
