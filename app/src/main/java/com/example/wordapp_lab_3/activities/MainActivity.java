@@ -2,6 +2,7 @@ package com.example.wordapp_lab_3.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,21 +65,22 @@ public class MainActivity extends AppCompatActivity {
     {
         if(menuItem != null)
             menuItem.setIcon(
-                    isGridLayoutManager?getApplicationContext().getDrawable(R.drawable.vertical_distribute)
-                            :getApplicationContext().getDrawable(R.drawable.grid_drawable)
+                    isGridLayoutManager? ContextCompat.getDrawable(this,R.drawable.vertical_distribute)
+                            :ContextCompat.getDrawable(this,R.drawable.grid_drawable)
             );
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        super.onOptionsItemSelected(item);
         if(item.getItemId() == R.id.action_switch_layout)
         {
             isGridLayoutManager = !isGridLayoutManager;
             setRecyclerView();
             setIcon(item);
+            return true;
         }
-        return true;
+        else
+            return super.onOptionsItemSelected(item);
 
     }
 }

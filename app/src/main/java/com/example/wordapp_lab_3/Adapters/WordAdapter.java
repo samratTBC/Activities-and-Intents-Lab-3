@@ -1,11 +1,14 @@
 package com.example.wordapp_lab_3.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +35,10 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
     @NonNull
     @Override
     public WordAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        if(this.context==null)
+            this.context=parent.getContext();
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
         return new ViewHolder(view);
     }
@@ -40,6 +47,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull WordAdapter.ViewHolder holder, int position) {
         //holder.bindData(list, position);
         holder.btn.setText(list.get(position).toString());
+        holder.btn.setOnClickListener(holder.btnOnclickListener);
     }
 
     @Override
@@ -67,12 +75,30 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
         private Button btn;
         private View view;
+
+        public static final String googleURL ="https://www.google.com/search?q=";
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.view=itemView;
             btn = itemView.findViewById(R.id.button_item);
         }
 
+        View.OnClickListener btnOnclickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.button_item)
+                {
+                    String website_url = googleURL + btn.getText().toString();
+                    Uri web_uri = Uri.parse(website_url);
+
+                    Intent webBasedIntent = new Intent(Intent.ACTION_VIEW, web_uri);
+                    view.getContext().startActivity(webBasedIntent);
+
+                }
+
+
+            }
+        };
         private void bindData(List list, int position)
         {
             this.btn.setText(list.get(position).toString());

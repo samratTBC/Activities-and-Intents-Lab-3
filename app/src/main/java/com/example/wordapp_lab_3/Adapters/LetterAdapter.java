@@ -20,12 +20,8 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
 
     private ArrayList<Character> list;
     private Context context;
-
-    private final String LETTER ="LETTER";
-
     public LetterAdapter()
     {
-
         this.list=provideList();
     }
 
@@ -52,8 +48,10 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private Button button;
+
+        private final String LETTER ="LETTER";
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             button = itemView.findViewById(R.id.button_item);
@@ -62,9 +60,9 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         View.OnClickListener buttonListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailActivity.class);
+                Intent intent = new Intent(view.getContext(), DetailActivity.class);
                 intent.putExtra(LETTER,button.getText().toString());
-                context.startActivity(intent);
+                view.getContext().startActivity(intent);
             }
         };
     }
