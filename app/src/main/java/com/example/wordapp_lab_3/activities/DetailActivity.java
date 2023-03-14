@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
 
         letterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         letterRecyclerView.setAdapter(wordAdapter);
+        setTitle("Words with the letter : " + getIntent().getStringExtra("LETTER"));
 
     }
 
