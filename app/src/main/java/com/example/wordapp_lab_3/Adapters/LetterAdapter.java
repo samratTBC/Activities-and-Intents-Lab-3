@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder> {
 
+    /**
+     * Adapter fields and methods.
+     */
     private ArrayList<Character> list;
     private Context context;
     public LetterAdapter()
@@ -47,6 +50,9 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         return list.size();
     }
 
+    /**
+     * View-Holder class which contains the button that is to be inflated in the parent layout.
+     */
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private Button button;
@@ -66,6 +72,11 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
             }
         };
     }
+
+    /**
+     *
+     * @return List of Character to be shown in the button view.
+     */
 
     private ArrayList<Character> provideList()
     {

@@ -19,6 +19,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
@@ -32,6 +33,15 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         this.list=LetterWordList(context, selected_letter);
         Log.d("TAG", "List: " + list.size()) ;
     }
+
+    /**
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     *
+     * @return ViewHolder in which the data source, here the list, is to be attatched.
+     */
     @NonNull
     @Override
     public WordAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,7 +70,13 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         List<String> list = Arrays.asList(context.getResources().getStringArray(R.array.words));
         Log.d("Banana", "LetterWordList: " + provided_letter);
         ArrayList<String> sortedList = new ArrayList<String>();
+        ArrayList<String> randomList = new ArrayList<String>();
+        Random random = new Random();
+        int randomNumber;
 
+        /**
+         * Check all the words that is of the same letter and store it in a list.
+         */
         for(int i=0; i<list.size(); i++)
         {
             Log.d("TAG", "word: " + list.get(i));
@@ -68,9 +84,26 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
                 sortedList.add(list.get(i));
         }
 
-        Log.d("TAG", "final wordlist: " + sortedList.toString());
-        return sortedList;
+
+        int count =0;
+
+        /**
+         * Select only 5 words for the recyclerView.
+         */
+        while(count!=5)
+        {
+            randomNumber = random.nextInt(sortedList.size());
+            if(!randomList.contains(sortedList.get(randomNumber))) {
+                randomList.add(sortedList.get(randomNumber));
+                count++;
+            }
+        }
+        return randomList;
     }
+
+    /**
+     * ViewHolder class which is to be inflated in the recylcerView.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private Button btn;
@@ -83,11 +116,17 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
             btn = itemView.findViewById(R.id.button_item);
         }
 
+        /**
+         * On click Listener set for the button for each of the word.
+         */
         View.OnClickListener btnOnclickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(view.getId() == R.id.button_item)
                 {
+                    /**
+                     *Intent provided to access the browser, to open the url resources.
+                     */
                     String website_url = googleURL + btn.getText().toString();
                     Uri web_uri = Uri.parse(website_url);
 
@@ -99,6 +138,14 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
             }
         };
+
+        /**
+         *
+         * @param list
+         * @param position
+         * Function for binding data that is called from the recycler view adapter that binds the
+         * view-holder with the data source, here it is the list.
+         */
         private void bindData(List list, int position)
         {
             this.btn.setText(list.get(position).toString());
