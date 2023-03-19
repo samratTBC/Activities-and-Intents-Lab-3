@@ -13,3 +13,7 @@ Concepts used:
 * RecyclerView
 * Adapters
 * Intents
+
+
+----------------------------------------------------------------------------
+![lab3](https://user-images.githubusercontent.com/110808053/226162267-a9cb479e-2389-4bde-aa28-0950fc2cef0b.gif)
